@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 
-<#if applicationPackage??>
-import ${applicationPackage}.ApplicationContext;
-</#if>
-
 import java.io.Serializable;
 
 
@@ -70,10 +66,6 @@ public class ${className}Presenter implements ${className}PresenterInput, ${clas
 	
 	
 	//region protected methods
-    String getString( @StringRes int stringResourceId ){
-
-        return ApplicationContext.ApplicationContext().getResources().getString( stringResourceId );
-    }
 	//endregion protected methods
 
 	

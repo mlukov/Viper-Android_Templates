@@ -2,26 +2,19 @@ package ${packageName};
 
 import android.app.Fragment;
 
-import com.snaps23.android.utils.StringUtils;
-import com.snaps23.android.utils.FontUtils;
 <#if applicationPackage??>
 import ${applicationPackage}.R;
-import ${applicationPackage}.ApplicationContext;
 </#if>
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.printastic.com.imagepicker.ui.WaitDialog;
-import android.printastic.com.imagepicker.handlers.BackHandlerInterface;
-import android.printastic.com.imagepicker.handlers.BackHandlerObject;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 
-public class ${className}Fragment extends Fragment implements BackHandlerObject,
-        ${className}PresenterOutput {
+public class ${className}Fragment extends Fragment implements ${className}PresenterOutput {
 
 	//region static fields
     public static final String TAG = ${className}Fragment.class.getSimpleName();
@@ -31,9 +24,7 @@ public class ${className}Fragment extends Fragment implements BackHandlerObject,
     protected static final String PARAMETER2_KEY = "${className}Fragment.parameter2";
 	//endregion static fields
 	
-	//region private fields
-	private BackHandlerInterface mBackHandlerInterface;
-	
+	//region private fields	
 	private ${className}PresenterInput mPresenter;
 	//endregion private fields
 
@@ -72,11 +63,6 @@ public class ${className}Fragment extends Fragment implements BackHandlerObject,
     public void onCreate( Bundle savedInstanceState ) {
 
         super.onCreate( savedInstanceState );
-
-        if ( !( getActivity() instanceof BackHandlerInterface ) )
-            throw new ClassCastException( "Hosting activity must implement BackHandlerInterface" );
-        else
-            mBackHandlerInterface = ( BackHandlerInterface ) getActivity();
 			
 	if( savedInstanceState != null ) {
 
@@ -117,9 +103,6 @@ public class ${className}Fragment extends Fragment implements BackHandlerObject,
 
         super.onResume();
 
-        if ( mBackHandlerInterface != null )
-            mBackHandlerInterface.setSelectedHandler( this, TAG );
-
         if( getPresenter() != null )
             getPresenter().onViewShow( getActivity() );
     }
@@ -131,9 +114,6 @@ public class ${className}Fragment extends Fragment implements BackHandlerObject,
             getPresenter().onViewHide();
 
         super.onPause();
-
-        if ( mBackHandlerInterface != null )
-            mBackHandlerInterface.setSelectedHandler( null, TAG );
     }
 	
 	@Override
@@ -148,29 +128,10 @@ public class ${className}Fragment extends Fragment implements BackHandlerObject,
 	//region private methods
 	private void showWaitDialogIfNotVisible( final String waitDialogMessage ) {
 
-      
-         if( WaitDialog.getActiveWaitDialog() != null && WaitDialog.getActiveWaitDialog().isShowing() )
-             return;
 
-        final WaitDialog waitDialog = WaitDialog.showWaitDialog( getActivity() );
-        if ( waitDialog == null )
-            return;
-
-        waitDialog.setMessage( waitDialogMessage );
     }
 	//endregion private methods
 
-    //region BackHandlerObject implementation
-    @Override
-    public boolean handleBackPressed() {
-
-        boolean handled = false;
-
-		...
-
-        return handled;
-    }
-    //endregion BackHandlerObject implementation
 	
 	//region ${className}PresenterOutput implementation
     @Override
@@ -185,7 +146,7 @@ public class ${className}Fragment extends Fragment implements BackHandlerObject,
         if ( getActivity() == null || getActivity().getActionBar() == null )
             return;
 
-        StringUtils.setActionBarTitle( getActivity().getActionBar(), ApplicationContext.ApplicationContext(), title, FontUtils.DEFAULT_APP_FONT_PATH );
+        getActivity().getActionBar().setTitle( title );
     }
 	
 	@Override

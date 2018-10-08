@@ -2,10 +2,9 @@ package ${packageName};
  
 import android.app.Activity;
 import android.support.annotation.Nullable;
-import ${packageName}.IPresenter;
 import java.io.Serializable;
 
-public interface ${className}PresenterInput extends IPresenter, Serializable {
+public interface ${className}PresenterInput extends Serializable {
 
 	// Set View reference to presenter
 	void setView( @Nullable ${className}PresenterOutput view );
@@ -24,4 +23,6 @@ public interface ${className}PresenterInput extends IPresenter, Serializable {
 
 	//Called just before the view gets hiden
     void onViewHide();
+	
+	void onDestroy();
 }
